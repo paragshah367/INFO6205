@@ -79,16 +79,15 @@ public class RandomWalk {
 
     public static void main(String[] args) {
 
+        int m;     // no. of steps
+
         // At least 100 different number of steps, i.e m
-        for (int m = 1; m < 101; m++) {
-//            int m = random.nextInt(51);     // no. of steps
+        for (m = 1; m < 1000; m+= 10) {
+//            int m = random.nextInt(51);
             int n = 50;      // number of experiments, optional parameter for input
-//            if (m==0) {
-//                continue;
-//            }
             double meanDistance = randomWalkMulti(m, n);
-            System.out.println(m + " steps: " + meanDistance + " over " + n + " experiments");
-//            System.out.println(m +" "+ meanDistance);
+//            System.out.println(m + " steps: " + meanDistance + " over " + n + " experiments");
+            System.out.println(m +" "+ meanDistance);
         }
     }
 
