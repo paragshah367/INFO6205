@@ -8,10 +8,10 @@ import java.util.Random;
 
 public class RandomWalk {
 
-    private int x = 0;
-    private int y = 0;
+    private int x = 0;  // current x position
+    private int y = 0;  // current y position
 
-    private final Random random = new Random();
+    private static final Random random = new Random();
 
     /**
      * Private method to move the current position, that's to say the drunkard moves
@@ -19,9 +19,21 @@ public class RandomWalk {
      * @param dx the distance he moves in the x direction
      * @param dy the distance he moves in the y direction
      */
+
     private void move(int dx, int dy) {
-        // TO BE IMPLEMENTED ...
-        // ... END IMPLEMENTATION
+        x = x + dx;
+        y = y + dy;
+//        System.out.println("x = " + x + " " + "y = " + y);
+    }
+
+    /**
+     * Private method to generate a random move according to the rules of the situation.
+     * That's to say, moves can be (+-1, 0) or (0, +-1).
+     */
+    private void randomMove() {
+        boolean ns = random.nextBoolean();  // true means step in x direction, false = y
+        int step = random.nextBoolean() ? 1 : -1; // step means +ve or -ve direction
+        move(ns ? step : 0, ns ? 0 : step);
     }
 
     /**
@@ -30,18 +42,9 @@ public class RandomWalk {
      * @param m the number of steps the drunkard takes
      */
     private void randomWalk(int m) {
-        // TO BE IMPLEMENTED ...
-        // ... END IMPLEMENTATION
-    }
-
-    /**
-     * Private method to generate a random move according to the rules of the situation.
-     * That's to say, moves can be (+-1, 0) or (0, +-1).
-     */
-    private void randomMove() {
-        boolean ns = random.nextBoolean();
-        int step = random.nextBoolean() ? 1 : -1;
-        move(ns ? step : 0, ns ? 0 : step);
+        for (int i = 0; i < m; i++) {
+            randomMove();
+        }
     }
 
     /**
@@ -50,9 +53,10 @@ public class RandomWalk {
      * @return the (Euclidean) distance from the origin to the current position.
      */
     public double distance() {
-        // TO BE IMPLEMENTED ...
-        return 0;
-        // ... END IMPLEMENTATION
+        double distance = 0.0;
+        distance = Math.pow(x, 2) + Math.pow(y, 2); // since the starting position is 0
+//        System.out.println("Current x = " + x + " Current y = " + y + ", Euclidean distance = " + Math.sqrt(distance));
+        return Math.sqrt(distance);
     }
 
     /**
@@ -66,20 +70,26 @@ public class RandomWalk {
         double totalDistance = 0;
         for (int i = 0; i < n; i++) {
             RandomWalk walk = new RandomWalk();
+
             walk.randomWalk(m);
             totalDistance = totalDistance + walk.distance();
         }
-        return totalDistance / n;
+        return totalDistance / n;   // Mean distance
     }
 
     public static void main(String[] args) {
-        if (args.length == 0)
-            throw new RuntimeException("Syntax: RandomWalk steps [experiments]");
-        int m = Integer.parseInt(args[0]);
-        int n = 30;
-        if (args.length > 1) n = Integer.parseInt(args[1]);
-        double meanDistance = randomWalkMulti(m, n);
-        System.out.println(m + " steps: " + meanDistance + " over " + n + " experiments");
+
+        // At least 100 different number of steps, i.e m
+        for (int m = 1; m < 101; m++) {
+//            int m = random.nextInt(51);     // no. of steps
+            int n = 50;      // number of experiments, optional parameter for input
+//            if (m==0) {
+//                continue;
+//            }
+            double meanDistance = randomWalkMulti(m, n);
+            System.out.println(m + " steps: " + meanDistance + " over " + n + " experiments");
+//            System.out.println(m +" "+ meanDistance);
+        }
     }
 
 }
