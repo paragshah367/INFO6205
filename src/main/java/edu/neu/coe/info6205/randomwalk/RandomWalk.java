@@ -74,20 +74,18 @@ public class RandomWalk {
             walk.randomWalk(m);
             totalDistance = totalDistance + walk.distance();
         }
-        return totalDistance / n;   // Mean distance
+        return totalDistance / n;       // Mean distance
     }
 
     public static void main(String[] args) {
 
-        int m;     // no. of steps
+        int m;      // no. of steps
 
-        // At least 100 different number of steps, i.e m
-        for (m = 1; m < 3000; m+= 100) {
-//            int m = random.nextInt(51);
-            int n = 100;      // number of experiments, optional parameter for input
-            double meanDistance = randomWalkMulti(m, n);
-            System.out.println(m + " steps: " + meanDistance + " over " + n + " experiments");
-//            System.out.println(meanDistance +" "+ m);
+        // At least 30/100 different number of steps, i.e m
+        for (m = 1; m < 10000; m+= 100) {
+            int n = 100;        // number of experiments, optional parameter for input
+            double d = randomWalkMulti(m, n);       // Mean distance
+            System.out.println(m + " steps: " + d + " over " + n + " experiments");
         }
     }
 
